@@ -7,6 +7,7 @@ indexTracker: 0,
 randomQuoteGenerator: function() {
   var randomQuote = this.getRandomArbitrary(0,this.quotes.length);
   this.newQuotes.push(this.quotes[randomQuote]);
+  this.getLink(this.newQuotes[this.indexTracker]);
   return this.newQuotes[this.indexTracker];
 },
 
@@ -14,7 +15,15 @@ getRandomArbitrary: function(min, max) {
   this.newQuotes.pop();
   return Math.floor(Math.random() * (max - min)) + min;
 },
+getLink: function(quote) {
+  var newArray = quote;
+  newArray = newArray.split(" ");
+  for (var i = 1; i < newArray.length; i+=2) {
+    newArray.splice(i,0,"%20");
+  }
+  return newArray.join("");
 
+},
 newQuote: function () {
   indexTracker = indexTracker++;
  }
@@ -24,6 +33,11 @@ var handlers = {
   getNewQuote: function() {
     view.displayQuotes();
     var color = this.getRandomColor();
+    var twitterQuote = quoteGenerator.getLink(quoteGenerator.randomQuoteGenerator());
+    var twitterLink = "https://twitter.com/intent/tweet?text=";
+    var twitter = twitterLink.concat(twitterQuote);
+    console.log(twitter);
+    document.getElementById('dynamicLink').setAttribute('href', twitter);
     document.body.style.backgroundColor = color;
     document.getElementById('wrapper').style.backgroundColor = color;
     document.getElementById('content').style.backgroundColor = color;
@@ -49,3 +63,5 @@ var view = {
 console.log(quoteGenerator.randomQuoteGenerator());
 console.log(quoteGenerator.randomQuoteGenerator());
 console.log(handlers.getRandomColor());
+console.log(quoteGenerator.getLink(quoteGenerator.randomQuoteGenerator()));
+console.log()
