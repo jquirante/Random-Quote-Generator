@@ -1,5 +1,6 @@
 var quote1 = "\"Only I can change my life. No one can do it for me\" <br /> <br /> - Carol Burnett";
 var quote2 = "\"Life is 10% what happens to you and 90% how you react to it.\" <br /> <br /> - Charles R. Swindoll";
+var globalQuote = "";
 var quoteGenerator = {
 quotes: [quote1,quote2],
 newQuotes: [],
@@ -7,7 +8,7 @@ indexTracker: 0,
 randomQuoteGenerator: function() {
   var randomQuote = this.getRandomArbitrary(0,this.quotes.length);
   this.newQuotes.push(this.quotes[randomQuote]);
-  this.getLink(this.newQuotes[this.indexTracker]);
+  globalQuote = this.newQuotes[this.indexTracker];
   return this.newQuotes[this.indexTracker];
 },
 
@@ -33,7 +34,7 @@ var handlers = {
   getNewQuote: function() {
     view.displayQuotes();
     var color = this.getRandomColor();
-    var twitterQuote = quoteGenerator.getLink(quoteGenerator.randomQuoteGenerator());
+    var twitterQuote = globalQuote;
     var twitterLink = "https://twitter.com/intent/tweet?text=";
     var twitter = twitterLink.concat(twitterQuote);
     console.log(twitter);
@@ -60,8 +61,3 @@ var view = {
 
   }
 };
-console.log(quoteGenerator.randomQuoteGenerator());
-console.log(quoteGenerator.randomQuoteGenerator());
-console.log(handlers.getRandomColor());
-console.log(quoteGenerator.getLink(quoteGenerator.randomQuoteGenerator()));
-console.log()
